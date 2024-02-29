@@ -9,33 +9,38 @@
 
 <div class="row">
     <div class="col">
+        <div class="mb-4">
+            <a href="{{ route('pastas.create') }}" class="btn btn-success w-100 fs-5">
+                + Aggiungi
+            </a>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Tempo di cottura</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Azioni</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                @foreach ($pastas as $pasta)
+                    <tr>
+                        <th scope="row">{{ $pasta->id }}</th>
+                        <td>{{ $pasta->title }}</td>
+                        <td>{{ $pasta->type }}</td>
+                        <td>{{ $pasta->cooking_time }} min.</td>
+                        <td>{{ $pasta->weight }}g</td>
+                        <td>
+                            <a href="{{ route('pastas.show', ['pasta' => $pasta->id]) }}" class="btn btn-primary">
+                                Vedi
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

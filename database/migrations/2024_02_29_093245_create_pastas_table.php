@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('pastas', function (Blueprint $table) {
             $table->id();
+            $table->string('src', 1024)->nullable();
+            $table->string('title', 64);
+            $table->string('type', 16);
+            $table->unsignedTinyInteger('cooking_time')->nullable();
+            $table->unsignedSmallInteger('weight');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -18,8 +18,7 @@ class PastaController extends Controller
      */
     public function index()
     {
-        // $pastas = Pasta::all();
-        $pastas = [];
+        $pastas = Pasta::all();
 
         return view('pastas.index', compact('pastas'));
     }
@@ -27,12 +26,32 @@ class PastaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // Versione 1: con dependency injection
+    public function show(Pasta $pasta)
     {
-        $pasta = Pasta::find($id);
-
         return view('pastas.show', compact('pasta'));
     }
+
+    // Versione 2: con find e if per controllare se è stato trovato quello che cercavamo
+    // public function show(string $id)
+    // {
+    //     $pasta = Pasta::find($id);
+
+    //     if ($pasta == null) {
+    //         // Vai in 404
+    //         abort(404);
+    //     }
+
+    //     return view('pastas.show', compact('pasta'));
+    // }
+
+    // Versione 3: con findOrFail (che, nel caso in cui non trovasse niente che corrisponde a quella query, dà 404)
+    // public function show(string $id)
+    // {
+    //     $pasta = Pasta::findOrFail($id);
+
+    //     return view('pastas.show', compact('pasta'));
+    // }
     /* -------------- FINE READ -------------- */
 
     /*
@@ -43,7 +62,7 @@ class PastaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pastas.create');
     }
 
     /**
@@ -51,7 +70,20 @@ class PastaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pastaData = $request->all();
+
+        // TODO: valido i dati, ma lo faremo in futuro
+
+        $pasta = new Pasta();
+        $pasta->src = $pastaData['src'];
+        $pasta->title = $pastaData['title'];
+        $pasta->type = $pastaData['type'];
+        $pasta->cooking_time = $pastaData['cooking_time'];
+        $pasta->weight = $pastaData['weight'];
+        $pasta->description = $pastaData['description'];
+        $pasta->save();
+
+        return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
     }
     /* -------------- FINE CREATE -------------- */
 

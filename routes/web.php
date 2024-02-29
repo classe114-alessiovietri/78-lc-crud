@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Controllers
+use App\Http\Controllers\Admin\BookController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,5 +52,8 @@ Route::get('/', function () {
 Route::get('/chi-siamo', function () {
     return view('subpages.about');
 });
+
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 
 // Route::get(PERCORSO CON CUI ARRIVARE ALLA PAGINA, FUNZIONE DI CALLBACK CHE MI CREA LA RISPOSTA DA DARE ALL UTENTE)

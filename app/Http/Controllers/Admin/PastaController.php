@@ -74,14 +74,22 @@ class PastaController extends Controller
 
         // TODO: valido i dati, ma lo faremo in futuro
 
-        $pasta = new Pasta();
-        $pasta->src = $pastaData['src'];
-        $pasta->title = $pastaData['title'];
-        $pasta->type = $pastaData['type'];
-        $pasta->cooking_time = $pastaData['cooking_time'];
-        $pasta->weight = $pastaData['weight'];
-        $pasta->description = $pastaData['description'];
-        $pasta->save();
+        $pasta = Pasta::create($pastaData);
+
+        // OPPURE
+
+        // $pasta = new Pasta();
+        // $pasta->fill($pastaData);
+        // $pasta->save();
+
+        // $pasta = new Pasta();
+        // $pasta->src = $pastaData['src'];
+        // $pasta->title = $pastaData['title'];
+        // $pasta->type = $pastaData['type'];
+        // $pasta->cooking_time = $pastaData['cooking_time'];
+        // $pasta->weight = $pastaData['weight'];
+        // $pasta->description = $pastaData['description'];
+        // $pasta->save();
 
         return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
     }
@@ -93,17 +101,36 @@ class PastaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Pasta $pasta)
     {
-        //
+        return view('pastas.edit', compact('pasta'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Pasta $pasta)
     {
-        //
+        $pastaData = $request->all();
+
+        // TODO: valido i dati, ma lo faremo in futuro
+
+        $pasta->update($pastaData);
+
+        // OPPURE
+
+        // $pasta->fill($pastaData);
+        // $pasta->save();
+
+        // $pasta->src = $pastaData['src'];
+        // $pasta->title = $pastaData['title'];
+        // $pasta->type = $pastaData['type'];
+        // $pasta->cooking_time = $pastaData['cooking_time'];
+        // $pasta->weight = $pastaData['weight'];
+        // $pasta->description = $pastaData['description'];
+        // $pasta->save();
+
+        return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
     }
     /* -------------- FINE UPDATE -------------- */
 
@@ -113,9 +140,11 @@ class PastaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pasta $pasta)
     {
-        //
+        $pasta->delete();
+
+        return redirect()->route('pastas.index');
     }
     /* -------------- FINE DELETE -------------- */
 }

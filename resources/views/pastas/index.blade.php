@@ -38,6 +38,20 @@
                             <a href="{{ route('pastas.show', ['pasta' => $pasta->id]) }}" class="btn btn-primary">
                                 Vedi
                             </a>
+                            <a href="{{ route('pastas.edit', ['pasta' => $pasta->id]) }}" class="btn btn-warning">
+                                Modifica
+                            </a>
+                            <form
+                                onsubmit="return confirm('Sei sicuro di voler eliminare questa pasta?');"
+                                class="d-inline-block"
+                                action="{{ route('pastas.destroy', ['pasta' => $pasta->id]) }}"
+                                method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">
+                                    Elimina
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

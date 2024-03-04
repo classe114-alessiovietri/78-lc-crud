@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 // Models
 use App\Models\Pasta;
 
+// Form Requests
+use App\Http\Requests\StorePastaRequest;
+use App\Http\Requests\UpdatePastaRequest;
+
 class PastaController extends Controller
 {
     /*
@@ -68,23 +72,9 @@ class PastaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePastaRequest $request)
     {
-        $validatedData = $request->validate([
-            'src'               => 'nullable|max:1024|url',
-            'title'             => 'required|max:64',
-            'type'              => 'required|max:16|in:corta,cortissima,lunga',
-            'cooking_time'      => 'nullable|numeric|min:1|max:20',
-            'weight'            => 'required|numeric|min:100|max:5000',
-            'description'       => 'nullable|max:4096',
-        ], [
-            'title.required' => 'MESSAGGIO CUSTOM DI ALESSIO PER REQUIRED',
-            'title.max' => 'MESSAGGIO CUSTOM DI ALESSIO PER MAX'
-        ]);
-
-        // dd($validatedData);
-
-        // $validatedData = $request->all();
+        $validatedData = $request->validated();
 
         $pasta = Pasta::create($validatedData);
 
@@ -121,16 +111,9 @@ class PastaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pasta $pasta)
+    public function update(UpdatePastaRequest $request, Pasta $pasta)
     {
-        $validatedData = $request->validate([
-            'src'               => 'nullable|max:1024|url',
-            'title'             => 'required|max:64',
-            'type'              => 'required|max:16|in:corta,cortissima,lunga',
-            'cooking_time'      => 'nullable|numeric|min:1|max:20',
-            'weight'            => 'required|numeric|min:100|max:5000',
-            'description'       => 'nullable|max:4096',
-        ]);
+        $validatedData = $request->validated();
 
         $pasta->update($validatedData);
 

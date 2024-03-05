@@ -70,23 +70,11 @@ class PastaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'src'               => 'nullable|max:1024|url',
-            'title'             => 'required|max:64',
-            'type'              => 'required|max:16|in:corta,cortissima,lunga',
-            'cooking_time'      => 'nullable|numeric|min:1|max:20',
-            'weight'            => 'required|numeric|min:100|max:5000',
-            'description'       => 'nullable|max:4096',
-        ], [
-            'title.required' => 'MESSAGGIO CUSTOM DI ALESSIO PER REQUIRED',
-            'title.max' => 'MESSAGGIO CUSTOM DI ALESSIO PER MAX'
-        ]);
+        $pastaData = $request->all();
 
-        // dd($validatedData);
+        // TODO: valido i dati, ma lo faremo in futuro
 
-        // $validatedData = $request->all();
-
-        $pasta = Pasta::create($validatedData);
+        $pasta = Pasta::create($pastaData);
 
         // OPPURE
 
@@ -123,16 +111,11 @@ class PastaController extends Controller
      */
     public function update(Request $request, Pasta $pasta)
     {
-        $validatedData = $request->validate([
-            'src'               => 'nullable|max:1024|url',
-            'title'             => 'required|max:64',
-            'type'              => 'required|max:16|in:corta,cortissima,lunga',
-            'cooking_time'      => 'nullable|numeric|min:1|max:20',
-            'weight'            => 'required|numeric|min:100|max:5000',
-            'description'       => 'nullable|max:4096',
-        ]);
+        $pastaData = $request->all();
 
-        $pasta->update($validatedData);
+        // TODO: valido i dati, ma lo faremo in futuro
+
+        $pasta->update($pastaData);
 
         // OPPURE
 
